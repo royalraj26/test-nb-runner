@@ -40,3 +40,7 @@ jobs:
       run: |
         cd ${{ RUNNER.temp }}
         ls
+    - uses: actions/upload-artifact@master
+      with:
+        name: output
+        path: ${{ RUNNER.temp }}/test.html
