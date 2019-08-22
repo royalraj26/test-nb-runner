@@ -6,10 +6,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      RUNNER: ${{ toJson(runner) }}
     steps:
     - name: Dump runner context
+      env:
+        RUNNER: ${{ toJson(runner) }}
       run: echo "$RUNNER"
     - uses: actions/checkout@v1
     - name: Set up Python
@@ -19,6 +19,8 @@ jobs:
         python -m pip install papermill
         python -m pip install ipykernel
     - name: Run notebook
+      env:
+        RUNNER: ${{ toJson(runner) }}
       run: |
         python - << "EOF"
         import papermill as pm
