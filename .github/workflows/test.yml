@@ -23,10 +23,14 @@ jobs:
       run: |
         python - << "EOF"
         import papermill as pm
+        import json
+        params = {}
+        with open('params.json', 'r') as paramsFile:
+          params = json.loads(paramsFile.read())
         pm.execute_notebook(
            'test.ipynb',
            '${{ RUNNER.temp }}/test.ipynb',
-           parameters = dict(alpha=0.6, ratio=0.1)
+           parameters = dict(params)
         )
         EOF
     - name: Strip out
