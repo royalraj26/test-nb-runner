@@ -40,10 +40,6 @@ jobs:
 
         c = Config()
 
-        # Configure our tag removal
-        c.TagRemovePreprocessor.remove_cell_tags = ("remove_cell",)
-        c.TagRemovePreprocessor.remove_input_tags = ('remove_input',)
-
         # Configure and run out exporter
         c.HTMLExporter.preprocessors = ["TagRemovePreprocessor"]
         HTMLExporter(config=c).from_filename('${{ RUNNER.temp }}/test.ipynb')
