@@ -33,7 +33,7 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        jupyter nbconvert ${{ RUNNER.temp }}/test.ipynb --TagRemovePreprocessor.enabled=True --TagRemovePreprocessor.remove_cell_tags="['remove_cell']" --to html
+        jupyter nbconvert ${{ RUNNER.temp }}/test.ipynb --to html
     - name: Test
       env:
         RUNNER: ${{ toJson(runner) }}
