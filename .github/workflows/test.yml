@@ -6,12 +6,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+    env:
+        RUNNER: ${{ toJson(runner) }}
     steps:
     - name: Dump runner context
-      env:
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-      run: echo "$RUNNER_CONTEXT"
+      run: echo "$RUNNER"
     - uses: actions/checkout@v1
     - name: Set up Python
       uses: actions/setup-python@v1
@@ -25,7 +24,10 @@ jobs:
         import papermill as pm
         pm.execute_notebook(
            'test.ipynb',
-           'test_2.ipynb',
+           '${{ RUNNER.temp }}\test.ipynb',
            parameters = dict(alpha=0.6, ratio=0.1)
         )
         EOF
+     - name: Test
+       run: |
+       cat ${{ RUNNER.temp }}\test.ipynb
