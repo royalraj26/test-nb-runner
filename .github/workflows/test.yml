@@ -12,3 +12,6 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install papermill
+    - name: Run notebook
+      run: |
+        import papermill as pm
