@@ -1,0 +1,21 @@
+name: Execute notebook
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: yaananth/run-notebook@tv1
+      env:
+        RUNNER: ${{ toJson(runner) }}
+      with:
+        notebook: "test.ipynb"
+        params: "params.json"
+    - uses: actions/upload-artifact@master
+      with:
+        name: output
+        path: ${{ RUNNER.temp }}/nb-runner
+      env:
+        RUNNER: ${{ toJson(runner) }}
