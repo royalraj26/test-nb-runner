@@ -6,6 +6,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      RUNNER: ${{ toJson(runner) }}
     steps:
     - name: Dump runner context
       run: echo "$RUNNER"
@@ -28,4 +30,4 @@ jobs:
         EOF
      - name: Test
        run: |
-       cat ${{ RUNNER.temp }}\test.ipynb
+        cat ${{ RUNNER.temp }}\test.ipynb
