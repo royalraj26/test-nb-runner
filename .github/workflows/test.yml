@@ -9,9 +9,9 @@ jobs:
     
     steps:
     - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
     - uses: actions/checkout@v1
     - name: Set up Python
       uses: actions/setup-python@v1
