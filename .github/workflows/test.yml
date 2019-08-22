@@ -34,4 +34,4 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        cat ${{ RUNNER.temp }}\test.ipynb
+        cat ${{ RUNNER.temp }}/test.ipynb
