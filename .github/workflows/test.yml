@@ -16,8 +16,7 @@ jobs:
       uses: actions/setup-python@v1
     - name: Install dependencies
       run: |
-        python -m pip install papermill
-        python -m pip install ipykernel
+        python -m pip install papermill ipykernel nbformat
     - name: Run notebook
       env:
         RUNNER: ${{ toJson(runner) }}
@@ -30,8 +29,27 @@ jobs:
            parameters = dict(alpha=0.6, ratio=0.1)
         )
         EOF
-    - name: Test
+    - name: Strip out
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        cat ${{ RUNNER.temp }}/test.ipynb
+        python - << "EOF"
+        from traitlets.config import Config
+        import nbformat as nbf
+        from nbconvert.exporters import HTMLExporter
+
+        c = Config()
+
+        # Configure our tag removal
+        c.TagRemovePreprocessor.remove_cell_tags = ("remove_cell",)
+        c.TagRemovePreprocessor.remove_input_tags = ('remove_input',)
+
+        # Configure and run out exporter
+        c.HTMLExporter.preprocessors = ["TagRemovePreprocessor"]
+        HTMLExporter(config=c).from_filename('${{ RUNNER.temp }}/test.ipynb')
+        EOF
+     - name: Test
+      env:
+        RUNNER: ${{ toJson(runner) }}
+      run: |
+        cat '${{ RUNNER.temp }}/test.ipynb'
