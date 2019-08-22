@@ -33,19 +33,10 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        python - << "EOF"
-        from traitlets.config import Config
-        import nbformat as nbf
-        from nbconvert.exporters import HTMLExporter
-
-        c = Config()
-
-        # Configure and run out exporter
-        c.HTMLExporter.preprocessors = ["TagRemovePreprocessor"]
-        HTMLExporter(config=c).from_filename('${{ RUNNER.temp }}/test.ipynb')
-        EOF
+        jupyter nbconvert ${{ RUNNER.temp }}/test.ipynb --TagRemovePreprocessor.enabled=True --TagRemovePreprocessor.remove_cell_tags="['remove_cell']" --to html
     - name: Test
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        cat '${{ RUNNER.temp }}/test.ipynb'
+        cd ${{ RUNNER.temp }}
+        ls
