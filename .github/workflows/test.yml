@@ -26,7 +26,7 @@ jobs:
         import papermill as pm
         pm.execute_notebook(
            'test.ipynb',
-           '${{ RUNNER.temp }}\test.ipynb',
+           '${{ RUNNER.temp }}/test.ipynb',
            parameters = dict(alpha=0.6, ratio=0.1)
         )
         EOF
