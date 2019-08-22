@@ -29,7 +29,7 @@ jobs:
           params = json.loads(paramsFile.read())
         pm.execute_notebook(
            'test.ipynb',
-           '${{ RUNNER.temp }}/test.ipynb',
+           '${{ RUNNER.temp }}/nb-runner/test.ipynb',
            parameters = dict(params)
         )
         EOF
@@ -37,7 +37,7 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        jupyter nbconvert ${{ RUNNER.temp }}/test.ipynb --to html
+        jupyter nbconvert ${{ RUNNER.temp }}/nb-runner/test.ipynb --to html
     - name: Test
       env:
         RUNNER: ${{ toJson(runner) }}
@@ -47,4 +47,4 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: output
-        path: ${{ RUNNER.temp }}/test.html
+        path: ${{ RUNNER.temp }}/nb-runner/*
