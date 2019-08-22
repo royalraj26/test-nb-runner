@@ -16,4 +16,11 @@ jobs:
       uses: actions/setup-python@v1
     - name: Run notebook
       run: |
+        python - << "EOF"
         import papermill as pm
+        pm.execute_notebook(
+           'test.ipynb',
+           'test_2.ipynb',
+           parameters = dict(alpha=0.6, ratio=0.1)
+        )
+        EOF
