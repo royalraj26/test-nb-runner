@@ -22,9 +22,9 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
       run: |
-        cd "{{ RUNNER.workspace }}"
+        cd ${{ RUNNER.workspace }}
         ls
-        cd "{{ RUNNER.temp }}"
+        cd ${{ RUNNER.temp }}
         ls
     - uses: actions/upload-artifact@master
       with:
