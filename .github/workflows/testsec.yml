@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-python@v1
     - name: Test
       env:
-        RUNNER: ${{ toJson(runner) }}.
+        RUNNER: ${{ toJson(runner) }}
         SECRET: ${{ toJson(secret) }}
       run: |
         python - << "EOF"
