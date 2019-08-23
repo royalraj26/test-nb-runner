@@ -20,6 +20,7 @@ jobs:
     - name: Run notebook
       env:
         RUNNER: ${{ toJson(runner) }}
+        SECRETS: ${{ toJson(secrets) }}
       run: |
         python - << "EOF"
         import papermill as pm
@@ -27,6 +28,8 @@ jobs:
         import json
         os.makedirs('${{ RUNNER.temp }}/nb-runner')
         params = {}
+        with open('${{ RUNNER.temp }}/nb-runner/.env', "w") as env:
+          env.write(${{ SECRETS }})  
         with open('params.json', 'r') as paramsFile:
           params = json.loads(paramsFile.read())
         pm.execute_notebook(
