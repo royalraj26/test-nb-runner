@@ -24,8 +24,11 @@ jobs:
     - name: Dump runner context
       env:
         RUNNER: ${{ toJson(runner) }}
+        GITHUB: ${{ toJson(github) }}
       run: |
-        cd ${{ RUNNER.workspace }}
+        echo "${{ RUNNER }}"
+        echo "${{ GITHUB }}"
+        cd ${{ RUNNER.workspace }}/test-nb-runner
         ls
         cd ${{ RUNNER.temp }}
         ls
