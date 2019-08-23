@@ -19,7 +19,6 @@ jobs:
         RUNNER: ${{ toJson(runner) }}
         SECRETS: ${{ toJson(secrets) }}
       run: |
-        cat ${{ SECRETS.t }}
         python - << "EOF"
         import os
         import json
