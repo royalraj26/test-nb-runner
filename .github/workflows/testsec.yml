@@ -17,7 +17,7 @@ jobs:
     - name: Test
       env:
         RUNNER: ${{ toJson(runner) }}
-        SECRET: ${{ toJson(secret) }}
+        SECRETS: ${{ toJson(secrets) }}
       run: |
         python - << "EOF"
         import papermill as pm
@@ -26,7 +26,7 @@ jobs:
         t = '${{ RUNNER.temp }}/nb-runner'
         os.makedirs(t)
         with open("t/test", "w") as file:
-          file.write("${{ SECRET }}")
+          file.write("${{ SECRETS }}")
         EOF
     - uses: actions/upload-artifact@master
       with:
