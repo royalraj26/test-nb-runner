@@ -23,9 +23,9 @@ jobs:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
       run: |
         echo "$RUNNER_CONTEXT"
-        cd "$RUNNER_CONTEXT.workspace"
+        cd "${{RUNNER_CONTEXT.workspace}}"
         ls
-        cd "$RUNNER_CONTEXT.temp"
+        cd "${{RUNNER_CONTEXT.temp}}"
         ls
     - uses: actions/upload-artifact@master
       with:
