@@ -19,13 +19,14 @@ jobs:
         RUNNER: ${{ toJson(runner) }}
         SECRETS: ${{ toJson(secrets) }}
       run: |
+        cat ${{ SECRETS.t }}
         python - << "EOF"
         import os
         import json
         t = '${{ RUNNER.temp }}/nb-runner'
         os.makedirs(t)
         with open(t + "/test", "w") as file:
-          file.write("${{ SECRETS }}")
+          file.write("${{ SECRETS.t }}")
         EOF
     - uses: actions/upload-artifact@master
       with:
