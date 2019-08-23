@@ -18,6 +18,10 @@ jobs:
         notebook: "test.ipynb"
         params: "params.json"
       continue-on-error: true
+    - name: Dump runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
     - uses: actions/upload-artifact@master
       with:
         name: output
