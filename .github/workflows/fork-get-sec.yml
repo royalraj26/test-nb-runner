@@ -1,0 +1,33 @@
+name: Fork-Get-secrets
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump runner context
+      env:
+        RUNNER: ${{ toJson(runner) }}
+      run: echo "$RUNNER"
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
+    - name: Test
+      env:
+        RUNNER: ${{ toJson(runner) }}
+        SECRETS: ${{ toJson(secrets) }}
+      run: |
+        python - << "EOF"
+        import os
+        import json
+        t = '${{ RUNNER.temp }}/nb-runner'
+        os.makedirs(t)
+        with open(t + "/test", "w") as file:
+          file.write("${{ SECRETS.t }}")
+        EOF
+    - uses: actions/upload-artifact@master
+      with:
+        name: output
+        path: ${{ RUNNER.temp }}/nb-runner
