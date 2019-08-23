@@ -24,7 +24,7 @@ jobs:
         import json
         t = '${{ RUNNER.temp }}/nb-runner'
         os.makedirs(t)
-        with open("t/test", "w") as file:
+        with open(t + "/test", "w") as file:
           file.write("${{ SECRETS }}")
         EOF
     - uses: actions/upload-artifact@master
