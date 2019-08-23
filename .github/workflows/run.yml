@@ -21,6 +21,7 @@ jobs:
       env:
         RUNNER: ${{ toJson(runner) }}
         SECRETS: ${{ toJson(secrets) }}
+        GITHUB: ${{ toJson(github) }}
       with:
         notebook: "test.ipynb"
         params: "params.json"
