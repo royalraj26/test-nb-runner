@@ -20,7 +20,6 @@ jobs:
         SECRETS: ${{ toJson(secrets) }}
       run: |
         python - << "EOF"
-        import papermill as pm
         import os
         import json
         t = '${{ RUNNER.temp }}/nb-runner'
