@@ -6,6 +6,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
+    
     - uses: actions/checkout@v1
     - name: Set up Python
       uses: actions/setup-python@v1
@@ -16,6 +17,7 @@ jobs:
       with:
         notebook: "test.ipynb"
         params: "params.json"
+      continue-on-error: true
     - uses: actions/upload-artifact@master
       with:
         name: output
