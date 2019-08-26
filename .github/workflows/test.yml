@@ -1,6 +1,9 @@
-name: Execute notebook
+name: Test analysis
 
-on: [push]
+on:
+  push:
+    branches:
+    - automation/test/*
 
 jobs:
   run:
