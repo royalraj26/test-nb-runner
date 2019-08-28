@@ -4,6 +4,9 @@ on:
   push:
     branches:
     - automation/test/*
+  pull_request:
+    branches:
+    - master
 
 jobs:
   run:
