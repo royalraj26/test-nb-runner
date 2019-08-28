@@ -31,3 +31,4 @@ jobs:
       with:
         name: output
         path: ${{ RUNNER.temp }}/nb-runner
+      condition: always()
