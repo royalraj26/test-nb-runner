@@ -1,52 +1,33 @@
 name: FORKTest-nb-runner
 
-on: [push]
+on:
+  push:
+    branches:
+    - automation/test/*
+  pull_request:
+    branches:
+    - master
 
 jobs:
-  build:
-
+  run:
     runs-on: ubuntu-latest
     steps:
-    - name: Dump runner context
-      env:
-        RUNNER: ${{ toJson(runner) }}
-      run: echo "$RUNNER"
+    
     - uses: actions/checkout@v1
     - name: Set up Python
       uses: actions/setup-python@v1
-    - name: Install dependencies
-      run: |
-        python -m pip install papermill ipykernel nbformat nbconvert
-    - name: Run notebook
+    - uses: yaananth/run-notebook@v1
       env:
         RUNNER: ${{ toJson(runner) }}
-      run: |
-        python - << "EOF"
-        import papermill as pm
-        import os
-        import json
-        os.makedirs('${{ RUNNER.temp }}/nb-runner')
-        params = {}
-        with open('params.json', 'r') as paramsFile:
-          params = json.loads(paramsFile.read())
-        pm.execute_notebook(
-           'test.ipynb',
-           '${{ RUNNER.temp }}/nb-runner/test.ipynb',
-           parameters = dict(params)
-        )
-        EOF
-    - name: Strip out
-      env:
-        RUNNER: ${{ toJson(runner) }}
-      run: |
-        jupyter nbconvert ${{ RUNNER.temp }}/nb-runner/test.ipynb --to html
-    - name: Test
-      env:
-        RUNNER: ${{ toJson(runner) }}
-      run: |
-        cd ${{ RUNNER.temp }}
-        ls
+        SECRETS: ${{ toJson(secrets) }}
+        GITHUB: ${{ toJson(github) }}
+      with:
+        notebook: "test.ipynb"
+        params: "params.json"
+      continue-on-error: true
     - uses: actions/upload-artifact@master
       with:
         name: output
         path: ${{ RUNNER.temp }}/nb-runner
+      env:
+        RUNNER: ${{ toJson(runner) }}
