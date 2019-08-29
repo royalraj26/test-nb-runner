@@ -24,7 +24,6 @@ jobs:
       with:
         notebook: "test.ipynb"
         params: "params.json"
-      continue-on-error: true
     - uses: actions/upload-artifact@master
       if: always()
       with:
